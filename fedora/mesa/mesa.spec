@@ -1,5 +1,6 @@
 # Latest Mesa spec file from Fedora Rawhide packaging for Fedora stable
 
+%define codecs_enabled 1
 %ifnarch s390x
 %global with_hardware 1
 %global with_vulkan_hw 1
@@ -433,7 +434,10 @@ export MESON_PACKAGE_CACHE_DIR="%{cargo_registry}/"
 %endif
   -Dandroid-libbacktrace=disabled \
 %ifarch %{ix86}
-  -Dglx-read-only-text=true
+  -Dglx-read-only-text=true \
+%endif
+%if %{codecs_enabled}
+  -Dvideo-codecs=h264dec,h264enc,h265dec,h265enc,vc1dec,av1dec,av1enc,vp9dec \
 %endif
   %{nil}
 %meson_build
